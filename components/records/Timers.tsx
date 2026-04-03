@@ -1,17 +1,17 @@
-"use client";
+﻿"use client";
 import { useState, useEffect, useRef } from "react";
 import { Btn } from "@/components/ui";
 import { formatDuration, formatTime } from "@/lib/utils";
 
-// ── 授乳タイマー ──────────────────────────────────────
+// 笏笏 謗井ｹｳ繧ｿ繧､繝槭・ 笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏
 export function FeedingTimer({ onSave, autoStart, babyColor }: {
-  onSave: (d: { method: "breast"; side: string; duration: number; datetime: string; startTime: string }) => void;
+  onSave: (d: { method: "breast"; side: "left" | "right" | "both"; duration: number; datetime: string; startTime: string }) => void;
   autoStart?: boolean;
   babyColor: string;
 }) {
   const [running, setRunning] = useState(false);
   const [elapsed, setElapsed] = useState(0);
-  const [side,    setSide]    = useState("左");
+  const [side,    setSide]    = useState("蟾ｦ");
   const [startTs, setStartTs] = useState<number | null>(null);
   const ref = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -35,14 +35,14 @@ export function FeedingTimer({ onSave, autoStart, babyColor }: {
   return (
     <div className="bg-white rounded-2xl p-4 shadow-sm">
       <div className="flex items-center gap-1.5 mb-3">
-        <span>⏱️</span>
-        <span className="font-bold text-sm" style={{ color: babyColor }}>授乳タイマー</span>
+        <span>竢ｱ・・/span>
+        <span className="font-bold text-sm" style={{ color: babyColor }}>謗井ｹｳ繧ｿ繧､繝槭・</span>
         {autoStart && running && (
-          <span className="text-[10px] px-2 py-0.5 rounded-lg font-bold" style={{ background: babyColor + "22", color: babyColor }}>NFC自動開始</span>
+          <span className="text-[10px] px-2 py-0.5 rounded-lg font-bold" style={{ background: babyColor + "22", color: babyColor }}>NFC閾ｪ蜍暮幕蟋・/span>
         )}
       </div>
       <div className="flex gap-2 justify-center mb-3">
-        {["左","右","両方"].map(s => (
+        {["蟾ｦ","蜿ｳ","荳｡譁ｹ"].map(s => (
           <button key={s} onClick={() => setSide(s)}
             className="px-3 py-1.5 rounded-2xl text-sm cursor-pointer font-sans"
             style={{ border: `2px solid ${side === s ? babyColor : "#F0E6E6"}`, background: side === s ? babyColor + "22" : "white", color: side === s ? babyColor : "#9E8E8E", fontWeight: side === s ? 700 : 400 }}>
@@ -58,17 +58,17 @@ export function FeedingTimer({ onSave, autoStart, babyColor }: {
           <div className="h-full rounded-full transition-all duration-500"
             style={{ width: `${prog}%`, background: `linear-gradient(90deg,${babyColor},#FFCB77)` }} />
         </div>
-        <div className="text-[10px] text-muted">目安: 10〜20分</div>
+        <div className="text-[10px] text-muted">逶ｮ螳・ 10縲・0蛻・/div>
       </div>
       <div className="flex gap-2 justify-center flex-wrap">
-        {!running && elapsed === 0 && <Btn label="▶ 開始" onClick={() => { setStartTs(Date.now()); setRunning(true); }} color={babyColor} />}
-        {running  && <Btn label="⏸ 停止" onClick={() => setRunning(false)} color="#FFCB77" />}
+        {!running && elapsed === 0 && <Btn label="笆ｶ 髢句ｧ・ onClick={() => { setStartTs(Date.now()); setRunning(true); }} color={babyColor} />}
+        {running  && <Btn label="竢ｸ 蛛懈ｭ｢" onClick={() => setRunning(false)} color="#FFCB77" />}
         {!running && elapsed > 0 && (
           <>
-            <Btn label="✓ 記録" onClick={save} color="#84C9A0" />
-            <Btn label="▶ 再開" onClick={() => { setStartTs(Date.now()); setRunning(true); }}
+            <Btn label="笨・險倬鹸" onClick={save} color="#84C9A0" />
+            <Btn label="笆ｶ 蜀埼幕" onClick={() => { setStartTs(Date.now()); setRunning(true); }}
               color={babyColor + "22"} style={{ color: babyColor, boxShadow: "none" }} />
-            <Btn label="↺" variant="ghost" onClick={() => { setElapsed(0); setRunning(false); setStartTs(null); }} />
+            <Btn label="竊ｺ" variant="ghost" onClick={() => { setElapsed(0); setRunning(false); setStartTs(null); }} />
           </>
         )}
       </div>
@@ -76,7 +76,7 @@ export function FeedingTimer({ onSave, autoStart, babyColor }: {
   );
 }
 
-// ── 睡眠タイマー ──────────────────────────────────────
+// 笏笏 逹｡逵繧ｿ繧､繝槭・ 笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏笏
 export function SleepTimer({ onSave, autoStart }: {
   onSave: (d: { startTime: string; endTime: string; datetime: string }) => void;
   autoStart?: "start" | null;
@@ -107,29 +107,29 @@ export function SleepTimer({ onSave, autoStart }: {
     <div className="rounded-2xl p-4 transition-all duration-500"
       style={{ background: sleeping ? "linear-gradient(135deg,#1E1240,#3D2060)" : "white", boxShadow: sleeping ? "0 4px 24px rgba(60,20,120,0.3)" : "0 4px 16px rgba(0,0,0,0.06)" }}>
       <div className="flex items-center gap-1.5 mb-2">
-        <span>{sleeping ? "🌙" : "☀️"}</span>
+        <span>{sleeping ? "嫌" : "笘・・}</span>
         <span className="font-bold text-sm" style={{ color: sleeping ? "#DDD0FF" : "#C9A8E8" }}>
-          {sleeping ? "おやすみ中..." : "睡眠タイマー"}
+          {sleeping ? "縺翫ｄ縺吶∩荳ｭ..." : "逹｡逵繧ｿ繧､繝槭・"}
         </span>
       </div>
       {sleeping && (
         <div className="text-center mb-3">
           <div className="text-[11px] mb-1" style={{ color: "rgba(255,255,255,0.5)" }}>
-            {startTs ? formatTime(new Date(startTs).toISOString()) : ""} から
+            {startTs ? formatTime(new Date(startTs).toISOString()) : ""} 縺九ｉ
           </div>
           <div className="text-5xl font-bold tracking-widest" style={{ color: "#DDD0FF" }}>{formatDuration(elapsed)}</div>
         </div>
       )}
       <div className="text-center">
         {!sleeping
-          ? <Btn label="🌙 寝かしつけ開始" onClick={() => { setStartTs(Date.now()); setSleeping(true); setElapsed(0); }} color="#C9A8E8" />
+          ? <Btn label="嫌 蟇昴°縺励▽縺鷹幕蟋・ onClick={() => { setStartTs(Date.now()); setSleeping(true); setElapsed(0); }} color="#C9A8E8" />
           : <button onClick={wake}
               className="px-6 py-2.5 rounded-3xl text-sm font-bold cursor-pointer font-sans"
               style={{ border: "1px solid rgba(255,255,255,0.3)", background: "rgba(255,255,255,0.15)", color: "white" }}>
-              ☀️ 起きた！
-            </button>
+              笘・・襍ｷ縺阪◆・・            </button>
         }
       </div>
     </div>
   );
 }
+
