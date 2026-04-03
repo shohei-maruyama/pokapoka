@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #FF8FAB;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background: #FFF8F2;
+  font-family: 'Hiragino Maru Gothic Pro', 'BIZ UDPGothic', 'Noto Sans JP', sans-serif;
+  color: #4A3F3F;
+  overscroll-behavior: none;
+}
+
+::-webkit-scrollbar { display: none; }
+
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pop {
+  0%, 100% { transform: scale(1); }
+  40%      { transform: scale(1.1); }
+}
+
+.animate-slide-up   { animation: slideUp   0.25s ease; }
+.animate-slide-down { animation: slideDown 0.2s  ease; }
+.animate-pop        { animation: pop       0.5s  ease; }
